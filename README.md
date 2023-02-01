@@ -35,4 +35,4 @@ Just a fun C++ training to understand the possibilities of the <b>OpengGL</b>, <
 
 ## Display
 
-![Display](https://github.dev/jpenrici/Simple_Experimental_Game/Display/sfml_display.png)
+![Display](https://github.com/jpenrici/Simple_Experimental_Game/blob/main/display/sfml_display.png)
