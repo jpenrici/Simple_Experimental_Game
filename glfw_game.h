@@ -49,7 +49,7 @@ int GLFW_Game(unsigned int screen_width, unsigned int screen_height)
     // Info
     cout << "Game  : C++" << endl;
     cout << "OpenGL: "    << glGetString(GL_VERSION) << endl;
-    cout << "GLSL  : "    << glGetString(GL_SHADING_LANGUAGE_VERSION) << endl;
+    cout << "GLFW  : "    << glGetString(GL_SHADING_LANGUAGE_VERSION) << endl;
 
     // Game
     Game game;
