@@ -1,14 +1,12 @@
 #include "game.h"
 
-using namespace std;
-
 Game::Game() : level(0), score(0), stars(0), action(NONE), state(GAME_STOP)
 {
     // Check .lvl files
-    for (const auto &entry : filesystem::directory_iterator(RESOURCES)) {
-        string resourceFile = entry.path();
+    for (const auto &entry : std::filesystem::directory_iterator(RESOURCES)) {
+        std::string resourceFile = entry.path();
         if (resourceFile.substr(resourceFile.length() - 4) == ".lvl") {
-            vector<string> newLevel = loadLevel(resourceFile);
+            std::vector<std::string> newLevel = loadLevel(resourceFile);
             if (!newLevel.empty()) {
                 levels.push_back(newLevel);
             }
@@ -16,7 +14,7 @@ Game::Game() : level(0), score(0), stars(0), action(NONE), state(GAME_STOP)
     }
     if (levels.empty()) {
         levels.push_back(standard());
-        cout << "Warning: Missing .lvl files! Use default." << endl;
+        std::cout << "Warning: Missing .lvl files! Use default.\n";
     }
 
     // setup
@@ -54,11 +52,11 @@ void Game::setLevel()
     }
 
     // Info
-    cout << "Total levels : " << levels.size() << endl;
-    cout << "Current Level: " << level << endl;
-    cout << "Total Enemies: " << enemies.size() << endl;
-    cout << "Toral Stars  : " << stars << endl;
-    cout << "-------------- " << endl;
+    std::cout << "Total levels : " << levels.size() << '\n';
+    std::cout << "Current Level: " << level << '\n';
+    std::cout << "Total Enemies: " << enemies.size() << '\n';
+    std::cout << "Toral Stars  : " << stars << '\n';
+    std::cout << "-------------- " << '\n';
 }
 
 void Game::update()
@@ -168,49 +166,49 @@ GameState Game::getState()
     return state;
 }
 
-vector<string> Game::getScene()
+std::vector<std::string> Game::getScene()
 {
     return scene;
 }
 
-string Game::toString()
+std::string Game::toString()
 {
-    string text = "Score: " + to_string(score) + " Level: " + to_string(level) + "\n";
+    std::string text = "Score: " + std::to_string(score) + " Level: " + std::to_string(level) + "\n";
     for (const auto &line : scene) {
         text += line + "\n";
     }
     return text;
 }
 
-vector<string> Game::loadLevel(string resourceFile)
+std::vector<std::string> Game::loadLevel(std::string resourceFile)
 {
     // Entry
-    cout << "Load: " << resourceFile << endl;
+    std::cout << "Load: " << resourceFile << '\n';
 
     // Check
     if (resourceFile.substr(resourceFile.length() - 4) != ".lvl") {
-        cout << "Error: Invalid file!" << endl;
+        std::cout << "Error: Invalid file!\n";
         return {};
     }
-    if (!filesystem::exists(resourceFile)) {
-        cout << "Error: File not found!" << endl;
+    if (!std::filesystem::exists(resourceFile)) {
+        std::cout << "Error: File not found!\n";
         return {};
     }
 
     // New scene
-    vector<string> newScene{};
+    std::vector<std::string> newScene{};
 
     // Load text file
     bool isValid = true;
-    ifstream ifs(resourceFile);
+    std::ifstream ifs(resourceFile);
     try {
-        string text{};
-        string line{};
+        std::string text{};
+        std::string line{};
         if (ifs.is_open()) {
             while (getline(ifs, line)) {
                 if (!newScene.empty()) {
                     if (line.length() != newScene.back().length()) {
-                        cout << "Error: Invalid .lvl file structure!" << endl;
+                        std::cout << "Error: Invalid .lvl file structure!\n";
                         newScene = {};
                         break;
                     }
@@ -231,13 +229,13 @@ vector<string> Game::loadLevel(string resourceFile)
                 return c == STAR;
             });
             if (players != 1 || enemies == 0 || stars == 0) {
-                cout << "Error: Failed to read game object symbols!" << endl;
+                std::cout << "Error: Failed to read game object symbols!\n";
                 newScene = {};
             }
         }
     }
     catch (...) {
-        cout << "Error: There was something wrong opening .lvl file!!" << endl;
+        std::cout << "Error: There was something wrong opening .lvl file!!\n";
         newScene = {};
     }
     ifs.close();
@@ -245,7 +243,7 @@ vector<string> Game::loadLevel(string resourceFile)
     return newScene;
 }
 
-vector<string> Game::standard()
+std::vector<std::string> Game::standard()
 {
     // P(Player), E(Enemy), O(Obstacle), S(Star), .(Space)
     // Default example: 10 x 10

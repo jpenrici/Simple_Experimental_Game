@@ -1,13 +1,13 @@
+#pragma once
+
 #include "game.h"
 
 #include <iostream>
 
-using namespace std;
-
 int Terminal_Game()
 {
     // Info
-    cout << "Game: C++" << endl;
+    std::cout << "Game: C++\n";
 
     // Game
     Game game;
@@ -19,18 +19,18 @@ int Terminal_Game()
         // Render
         switch (game.getState()) {
         case GAME_ACTIVE:
-            cout << game.toString() << endl;
-            cout << "Enter W(UP) A(LEFT) S(DOWN) D(RIGHT) E(ESCAPE): ";
+            std::cout << game.toString() << '\n';
+            std::cout << "Enter W(UP) A(LEFT) S(DOWN) D(RIGHT) E(ESCAPE): ";
             break;
         case GAME_PAUSE:
-            cout << "Enter P(PLAY/PAUSE): " << endl;
+            std::cout << "Enter P(PLAY/PAUSE):\n";
             break;
         case GAME_STOP:
-            cout << "Congratulations! \\o/" << endl;
+            std::cout << "Congratulations! \\o/\n";
             running = false;
             break;
         case GAME_OVER:
-            cout << "Game Over!" << endl;
+            std::cout << "Game Over!\n";
             running = false;
             break;
         }
@@ -38,7 +38,7 @@ int Terminal_Game()
         // Process Input and Update
         if (running) {
             char entry;
-            cin >> entry;
+            std::cin >> entry;
             if (entry == 'E' || entry == 'e') {
                 game.input(ESCAPE);
             }
@@ -62,7 +62,7 @@ int Terminal_Game()
     }
 
     // Terminate
-    cout << "Terminate!" << endl;
+    std::cout << "Terminate!\n";
 
     return 0;
 }

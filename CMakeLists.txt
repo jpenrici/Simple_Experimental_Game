@@ -10,6 +10,7 @@ set(SOURCES
     game.h game.cpp
     glfw_game.h
     sfml_game.h
+    sdl_game.h
     terminal_game.h
 )
 
@@ -29,14 +30,20 @@ add_subdirectory(glad/)
 find_package (SFML 2.5 COMPONENTS audio graphics network system window REQUIRED)
 find_package(OpenGL REQUIRED COMPONENTS OpenGL)
 find_package(glfw3 REQUIRED)
+find_package(SDL2 REQUIRED)
+find_package(SDL2_ttf REQUIRED)
 
 include_directories(
     ${OPENGL_INCLUDE_DIRS}
+    ${SDL2_INCLUDE_DIRS}
+    ${SDL2_ttf_INCLUDE_DIRS}
 )
 
 target_link_libraries (
     ${PROJECT_NAME} PUBLIC
     ${OPENGL_LIBRARIES}
+    SDL2::SDL2
+    SDL2_ttf::SDL2_ttf
     sfml-audio
     sfml-graphics
     sfml-network

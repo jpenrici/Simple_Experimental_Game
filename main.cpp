@@ -1,4 +1,5 @@
 #include "glfw_game.h"
+#include "sdl_game.h"
 #include "sfml_game.h"
 #include "terminal_game.h"
 
@@ -12,6 +13,9 @@ int main(int argc, char *argv[])
         if (argv[1] == std::string("sfml")) {
             SFML_Game(800, 600);
         }
+        else if (argv[1] == std::string("sdl")) {
+            SDL2_Game(800, 600);
+        }
         else if (argv[1] == std::string("glfw")) {
             GLFW_Game(800, 600);
         }
@@ -19,7 +23,7 @@ int main(int argc, char *argv[])
             Terminal_Game();
         }
         else {
-            std::cout << "use: Game [glfw|sfml|terminal]" << std::endl;
+            std::cout << "use: Game [glfw|sdl|sfml|terminal]" << std::endl;
         }
     }
     else {

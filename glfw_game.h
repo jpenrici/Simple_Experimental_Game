@@ -1,3 +1,5 @@
+#pragma once
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -6,13 +8,11 @@
 #include <iostream>
 #include <thread>
 
-using namespace std;
-
 int GLFW_Game(unsigned int screen_width, unsigned int screen_height)
 {
     // GLFW
     if (!glfwInit()) {
-        cout << "Failed to initialize GLFW!" << endl;
+        std::cout << "Failed to initialize GLFW!\n";
         return EXIT_FAILURE;
     }
 
@@ -20,7 +20,7 @@ int GLFW_Game(unsigned int screen_width, unsigned int screen_height)
     GLFWwindow *window = glfwCreateWindow(screen_width, screen_height,
                                           "Game", NULL, NULL);
     if (window == NULL) {
-        cout << "Failed to create GLFW window!" << endl;
+        std::cout << "Failed to create GLFW window!\n" ;
         glfwTerminate();
         return EXIT_FAILURE;
     }
@@ -30,13 +30,13 @@ int GLFW_Game(unsigned int screen_width, unsigned int screen_height)
 
     // Callback
     glfwSetFramebufferSizeCallback(window,
-    [](GLFWwindow * window, int width, int height) {
+        [](GLFWwindow * window, int width, int height) {
         glViewport(0, 0, width, height);
     });
 
     // Glad: load all OpenGL function pointers
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        cout << "Failed to initialize GLAD" << endl;
+        std::cout << "Failed to initialize GLAD\n";
         return EXIT_FAILURE;
     }
 
@@ -47,9 +47,9 @@ int GLFW_Game(unsigned int screen_width, unsigned int screen_height)
     glLoadIdentity();
 
     // Info
-    cout << "Game  : C++" << endl;
-    cout << "OpenGL: "    << glGetString(GL_VERSION) << endl;
-    cout << "GLFW  : "    << glGetString(GL_SHADING_LANGUAGE_VERSION) << endl;
+    std::cout << "Game  : C++\n";
+    std::cout << "OpenGL: " << glGetString(GL_VERSION) << '\n';
+    std::cout << "GLFW  : " << glGetString(GL_SHADING_LANGUAGE_VERSION) << '\n';
 
     // Game
     Game game;
@@ -58,7 +58,7 @@ int GLFW_Game(unsigned int screen_width, unsigned int screen_height)
     // Main loop
     while (running && !glfwWindowShouldClose(window)) {
         // Wait
-        this_thread::sleep_for(chrono::milliseconds(60));
+        std::this_thread::sleep_for(std::chrono::milliseconds(60));
 
         // Update
         game.update();
@@ -89,9 +89,9 @@ int GLFW_Game(unsigned int screen_width, unsigned int screen_height)
                     b = 255;
                     break;
                 case ENEMY:
-                    r = 255;
-                    g = 127;
-                    b = 0;
+                    r = 0;
+                    g = 255;
+                    b = 255;
                     break;
                 case STAR:
                     r = 255;
@@ -168,7 +168,7 @@ int GLFW_Game(unsigned int screen_width, unsigned int screen_height)
     // Terminate
     glfwSetWindowShouldClose(window, true);
     glfwTerminate();
-    cout << "Terminate!" << endl;
+    std::cout << "Terminate!\n";
 
     return 0;
 }
